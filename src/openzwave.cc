@@ -401,7 +401,12 @@ void async_cb_handler(uv_async_t *handle, int status)
 		 * necessary.
 		 */
 		default:
-			fprintf(stderr, "Unhandled notification: %d\n", notif->type);
+			args[0] = String::New("notification");
+			args[1] = Integer::New(notif->type);
+			args[2] = Integer::New(notif->nodeid);
+			args[3] = Integer::New(notif->notification);
+			MakeCallback(context_obj, "emit", 4, args);
+			// fprintf(stderr, "Unhandled notification: %d\n", notif->type);
 			break;
 		}
 
